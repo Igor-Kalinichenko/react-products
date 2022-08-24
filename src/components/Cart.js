@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import CartItem from './CartItem';
 import Total from './Total';
 
-function Cart({products, removeFromCart}) {
+function Cart({products, removeFromCart, changeCount}) {
     const [total, setTotal] = useState(0);
 
     useEffect( () => {
         setTotal(products.reduce((acc, product) => {
-            return acc + product.price;
+            return acc + product.price*product.count;
         }, 0))
     }, [products]);
 
@@ -17,7 +17,7 @@ function Cart({products, removeFromCart}) {
         <h3 className='text-center'>Cart</h3>
         <ListGroup>
             {
-                products.map(product => <CartItem key={product.id} product={product} removeFromCart={removeFromCart} />)
+                products.map(product => <CartItem key={product.id} product={product} removeFromCart={removeFromCart} changeCount={changeCount} />)
             }
         </ListGroup>
         <Total total={total} />
