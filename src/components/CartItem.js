@@ -11,7 +11,7 @@ function CartItem({product, removeFromCart, changeCount}){
                 variant="success"
                 disabled = {product.count <= 1 ? true : false}
                 onClick={(e) => changeCount(product.id)}>-</Button>
-    <Badge className='ml-3 text-white bg-danger' pill onClick={() => removeFromCart(product.id)}>Remove</Badge>
+        <Badge className='ml-3 text-white bg-danger' pill onClick={() => removeFromCart(product.id)}>Remove</Badge>
     </ListGroup.Item>
 }
  export default CartItem
