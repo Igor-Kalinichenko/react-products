@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
 
 function Profile({setProfile}) {
@@ -11,7 +11,7 @@ function Profile({setProfile}) {
         localStorage.setItem('email', emailRef.current.value);
         loginRef.current.value = '';
         emailRef.current.value = '';
-    }
+    }    
 
     return <div className="container">
         <h3 className="text-center">Profile</h3>
