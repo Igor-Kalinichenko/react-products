@@ -1,7 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useContext } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
+import ThemeContext from "../context/ThemeContext";
 
 function Profile({setProfile}) {
+    const {setMessage} = useContext(ThemeContext);
     const loginRef = useRef(null);
     const emailRef = useRef(null);
 
@@ -9,9 +11,14 @@ function Profile({setProfile}) {
         setProfile({login: loginRef.current.value, email: emailRef.current.value});
         localStorage.setItem('login', loginRef.current.value);
         localStorage.setItem('email', emailRef.current.value);
+        setMessage(loginRef.current.value && emailRef.current.value ? `Welcome ${loginRef.current.value}!` : 'Please, fill your profile');
         loginRef.current.value = '';
         emailRef.current.value = '';
-    }    
+    }
+    
+    useEffect(() => {
+        setProfile({login: localStorage.getItem('login'), email: localStorage.getItem('email')});
+        }, [])
 
     return <div className="container">
         <h3 className="text-center">Profile</h3>

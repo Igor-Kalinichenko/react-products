@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import {Container, Row} from 'react-bootstrap';
 import Product from "./Product";
 import Cart from "./Cart";
+import ThemeContext from "../context/ThemeContext";
 
 function Products() {
+    const {setMessage} = useContext(ThemeContext);
     const [products, setProducts] = useState([]);
     useEffect(() => {
         setProducts([{
@@ -100,10 +102,12 @@ function Products() {
     }, []);
 
     const addToCart = id => {
-        setProducts(products.map(product => ({...product, addedToCart: product.id === id ? true : product.addedToCart})))
+        setProducts(products.map(product => ({...product, addedToCart: product.id === id ? true : product.addedToCart})));
+        setMessage(`Product successfully added to cart`);
     }
     const removeFromCart = id => {
-        setProducts(products.map(product => ({...product, addedToCart: product.id === id ? false : product.addedToCart})))
+        setProducts(products.map(product => ({...product, addedToCart: product.id === id ? false : product.addedToCart})));
+        setMessage(`Product successfully removed from cart`);
     }
 
     const changeCount = (id, dataCount) => {
