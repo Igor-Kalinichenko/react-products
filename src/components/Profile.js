@@ -1,9 +1,11 @@
-import { useEffect, useRef, useContext } from "react";
+import { useEffect, useRef, useContext, useState } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
-import ThemeContext from "../context/ThemeContext";
+import { Navigate } from "react-router-dom";
+import ProfileContext from "../context/ProfileContext";
 
 function Profile({setProfile}) {
-    const {setMessage} = useContext(ThemeContext);
+    const {setMessage} = useContext(ProfileContext);
+    const [profileSaved, setProfileSaved] = useState(false);
     const loginRef = useRef(null);
     const emailRef = useRef(null);
 
@@ -11,7 +13,10 @@ function Profile({setProfile}) {
         setProfile({login: loginRef.current.value, email: emailRef.current.value});
         localStorage.setItem('login', loginRef.current.value);
         localStorage.setItem('email', emailRef.current.value);
-        setMessage(loginRef.current.value && emailRef.current.value ? `Welcome ${loginRef.current.value}!` : 'Please, fill your profile');
+        setMessage({text: loginRef.current.value && emailRef.current.value ? `Welcome ${loginRef.current.value}!` : 'Please, fill your profile'});
+
+        loginRef.current.value && emailRef.current.value ? setProfileSaved(true) : setProfileSaved(false);
+        
         loginRef.current.value = '';
         emailRef.current.value = '';
     }
@@ -47,6 +52,7 @@ function Profile({setProfile}) {
                     <Button variant="primary" className="my-2 px-5 d-flex" onClick={saveProfile}>Save</Button>
                 </div>
             </Form>
+        {profileSaved ? <Navigate to='/' /> : ''}
     </div>
 
 }

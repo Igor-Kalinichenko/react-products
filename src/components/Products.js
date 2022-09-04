@@ -2,10 +2,10 @@ import { useEffect, useState, useContext } from "react";
 import {Container, Row} from 'react-bootstrap';
 import Product from "./Product";
 import Cart from "./Cart";
-import ThemeContext from "../context/ThemeContext";
+import ProfileContext from "../context/ProfileContext";
 
 function Products() {
-    const {setMessage} = useContext(ThemeContext);
+    const {setMessage} = useContext(ProfileContext);
     const [products, setProducts] = useState([]);
     useEffect(() => {
         setProducts([{
@@ -102,12 +102,14 @@ function Products() {
     }, []);
 
     const addToCart = id => {
+        const productName = products.filter(product => product.id === id).map(el => `${el.brand} ${el.model}`);
         setProducts(products.map(product => ({...product, addedToCart: product.id === id ? true : product.addedToCart})));
-        setMessage(`Product successfully added to cart`);
+        setMessage({text: `Product ${productName} successfully added to cart`});
     }
     const removeFromCart = id => {
+        const productName = products.filter(product => product.id === id).map(el => `${el.brand} ${el.model}`);
         setProducts(products.map(product => ({...product, addedToCart: product.id === id ? false : product.addedToCart})));
-        setMessage(`Product successfully removed from cart`);
+        setMessage({text: `Product ${productName} successfully removed from cart`, variant: 'danger'});
     }
 
     const changeCount = (id, dataCount) => {

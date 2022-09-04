@@ -1,0 +1,19 @@
+@keyframes showAlert {
+    0% {
+        bottom: -4rem;
+    }
+    20% {
+        bottom: 0;
+    }
+    80% {
+        bottom: 0;
+    }
+    100% {
+        bottom: -4rem;
+    }
+}
+.customAlert {
+    bottom: -4rem;
+    right: 0;
+    animation: showAlert 3s;
+}

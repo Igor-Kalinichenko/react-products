@@ -1,16 +1,20 @@
 import { useContext, useState } from "react";
 import { Button } from "react-bootstrap";
+import ProfileContext from "../context/ProfileContext";
 import ThemeContext from "../context/ThemeContext";
 
 function ChangeTheme() {
-    const {theme, setTheme, profile, setMessage} = useContext(ThemeContext);
+    const {theme, setTheme} = useContext(ThemeContext);
+    const {profile, setMessage} = useContext(ProfileContext);
+
     const [showConfirm, setShowConfirm] = useState(false);
     const [showNotice, setShowNotice] = useState(false);
+
     function showInfo() {
         profile.login && profile.email ? setShowConfirm(true) : setShowNotice(true);
         setTimeout(() => {setShowConfirm(false)}, 3000);
         setTimeout(() => {setShowNotice(false)}, 3000);
-        setMessage(profile.login && profile.email ? 'You successfully confirmed your order' : 'Please, fill your profile');
+        setMessage({text: profile.login && profile.email ? 'You successfully confirmed your order' : 'Please, fill your profile'});
     }
 
     return <>
